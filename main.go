@@ -21,7 +21,7 @@ type Module struct {
 	Repo string`json:"repo"`
 }
 
-type Modules map[string]*Module
+type Modules map[string]Module
 
 func FetchModules(ctx context.Context, url string) (Modules, error) {
 	logger := logging.Get(ctx)
@@ -38,7 +38,7 @@ func FetchModules(ctx context.Context, url string) (Modules, error) {
 	modules := make(Modules)
 	for _, m := range raw {
 		logger.Debug("module", "name", m.Name, "definition", m)
-		modules[m.Name] = &m
+		modules[m.Name] = m
 	}
 
 	return modules, nil
@@ -68,7 +68,7 @@ func main() {
 		}
 
 		modpath, _ := strings.CutPrefix(r.URL.Path, "/")
-		mod := modules[modpath]
+		mod, found := modules[modpath]
 
 		write := func(str string) {
 			if err != nil {
@@ -82,7 +82,7 @@ func main() {
 		}
 
 		write("<html><head>")
-		if mod != nil {
+		if found {
 			vcs := mod.VCS
 			if vcs == "" {
 				vcs = "git"
