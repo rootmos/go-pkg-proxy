@@ -1,6 +1,7 @@
 image: alpine/edge
 packages:
   - go
+  - nginx
 tasks:
   - build: |
       cd go-pkg-proxy
@@ -11,6 +12,9 @@ tasks:
         GO_PKG_PROXY_LOG_LEVEL=DEBUG \
         GO_PKG_PROXY_DRY_RUN=1 \
         GO_PKG_PROXY_MODULES=doc/example/go.json
+  - test-nginx: |
+      cd go-pkg-proxy
+      ./test-nginx.py
   - check-doc: |
       cd go-pkg-proxy
       tools/is-clean --make --root=doc README.md
