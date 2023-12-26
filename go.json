@@ -1,7 +1,7 @@
 [
     {
-        "root": "rootmos.io",
         "name": "go-pkg-proxy",
+        "root": "rootmos.io/go-pkg-proxy",
         "repo": "https://git.sr.ht/~rootmos/go-pkg-proxy"
     }
 ]

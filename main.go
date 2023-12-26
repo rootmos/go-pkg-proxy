@@ -15,8 +15,8 @@ import (
 )
 
 type Module struct {
-	Root string `json:"root"`
 	Name string `json:"name"`
+	Root string `json:"root"`
 	VCS string `json:"vcs,omitempty"`
 	Repo string`json:"repo"`
 }
@@ -87,7 +87,7 @@ func main() {
 			if vcs == "" {
 				vcs = "git"
 			}
-			write(fmt.Sprintf("<meta name=\"go-import\" content=\"%s/%s %s %s\">", mod.Root, mod.Name, vcs, mod.Repo))
+			write(fmt.Sprintf("<meta name=\"go-import\" content=\"%s %s %s\">", mod.Root, vcs, mod.Repo))
 		}
 		write("</head>")
 		write("<body></body>")
