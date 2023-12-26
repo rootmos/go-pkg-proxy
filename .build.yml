@@ -1,0 +1,14 @@
+image: alpine/edge
+packages:
+  - go
+tasks:
+  - build: |
+      cd go-pkg-proxy
+      make build
+  - check-doc: |
+      cd go-pkg-proxy
+      tools/is-clean --make --root=doc README.md
+triggers:
+  - action: email
+    condition: always
+    to: builds@rootmos.io
