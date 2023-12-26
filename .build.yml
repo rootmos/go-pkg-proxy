@@ -5,6 +5,12 @@ tasks:
   - build: |
       cd go-pkg-proxy
       make build
+  - check-example: |
+      cd go-pkg-proxy
+      make run \
+        GO_PKG_PROXY_LOG_LEVEL=DEBUG \
+        GO_PKG_PROXY_DRY_RUN=1 \
+        GO_PKG_PROXY_MODULES=doc/example/go.json
   - check-doc: |
       cd go-pkg-proxy
       tools/is-clean --make --root=doc README.md

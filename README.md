@@ -1,6 +1,18 @@
 go-pkg-proxy
 ============
 
+## Example
+
+```json
+[
+    {
+        "name": "go-pkg-proxy",
+        "root": "rootmos.io/go-pkg-proxy",
+        "repo": "https://git.sr.ht/~rootmos/go-pkg-proxy"
+    }
+]
+```
+
 ## Usage
 ```
 Usage of go-pkg-proxy:

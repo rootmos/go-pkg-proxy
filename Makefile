@@ -18,6 +18,9 @@ update:
 	$(GO) get -u
 	$(GO) mod tidy
 
+doc: build
+	$(MAKE) -C doc
+
 clean:
 	rm -rf $(TARGET)
 
@@ -26,6 +29,6 @@ deepclean: clean
 	rm -rf $(GOPATH)
 
 .PHONY: build run test
-.PHONY: update
+.PHONY: update doc
 .PHONY: clean deepclean
 FORCE:
