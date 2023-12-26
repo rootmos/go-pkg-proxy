@@ -47,6 +47,7 @@ func FetchModules(ctx context.Context, url string) (Modules, error) {
 func main() {
 	addr := flag.String("addr", common.Getenv2("ADDR", ":8000"), "bind to addr:port")
 	modulesURL := flag.String("modules", common.Getenv2("MODULES", "file://go.json"), "fetch modules from URL")
+	dryRun := flag.Bool("dry-run", common.GetenvBool("DRY_RUN"), "try loading modules and exit afterwards")
 	flag.Parse()
 
 	logger, err := logging.SetupDefaultLogger()
@@ -54,6 +55,16 @@ func main() {
 		log.Fatal(err)
 	}
 	logger.Debug("hello")
+
+	if *dryRun {
+		ctx := logging.Set(context.Background(), logger)
+
+		_, err := FetchModules(ctx, *modulesURL)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		logger := logger.With("url", r.URL, "remoteAddr", r.RemoteAddr)
