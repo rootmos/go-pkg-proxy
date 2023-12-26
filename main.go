@@ -55,21 +55,21 @@ func main() {
 	}
 	logger.Debug("hello")
 
-	ctx := logging.Set(context.Background(), logger)
-
-	modules, err := FetchModules(ctx, *modulesURL)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		logger := logger.With("url", r.URL, "remoteAddr", r.RemoteAddr)
 		logger.Info("request")
 
+		ctx := logging.Set(r.Context(), logger)
+
+		modules, err := FetchModules(ctx, *modulesURL)
+		if err != nil {
+			http.Error(w, "unable to fetch modules", http.StatusInternalServerError)
+			return
+		}
+
 		modpath, _ := strings.CutPrefix(r.URL.Path, "/")
 		mod := modules[modpath]
 
-		var err error
 		write := func(str string) {
 			if err != nil {
 				return
@@ -77,6 +77,7 @@ func main() {
 			_, err = w.Write([]byte(str))
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
 			}
 		}
 
