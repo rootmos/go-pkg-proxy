@@ -15,6 +15,7 @@ script_dir = os.path.dirname(script_path)
 def nginx():
     tmp = tempfile.TemporaryDirectory()
     cfg = os.path.join(script_dir, "doc/example/nginx.conf")
+    os.mkdir(os.path.join(tmp.name, "logs"))
     p = subprocess.Popen(["nginx", "-p", tmp.name, "-c", cfg])
     try:
         yield p
