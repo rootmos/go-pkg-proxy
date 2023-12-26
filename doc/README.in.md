@@ -4,7 +4,11 @@ go-pkg-proxy
 ## Example
 
 ```json
-@include "example/go.json"
+@include "go.json"
+```
+
+```json
+@include "nginx.snippet.conf"
 ```
 
 ## Usage

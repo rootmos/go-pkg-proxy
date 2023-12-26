@@ -9,9 +9,12 @@ INCLUDE ?= $(TOOLS)/include
 USAGE ?= $(TOOLS)/usage
 
 .PHONY: all
-all: $(ROOT)/README.md
+all: $(ROOT)/README.md nginx.conf
 
 $(ROOT)/README.md: README.in.md usage
+	$(INCLUDE) "$<" "$@"
+
+nginx.conf: nginx.in.conf nginx.snippet.conf
 	$(INCLUDE) "$<" "$@"
 
 usage: $(EXE)

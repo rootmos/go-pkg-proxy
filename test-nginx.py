@@ -14,7 +14,7 @@ script_dir = os.path.dirname(script_path)
 @contextmanager
 def nginx():
     tmp = tempfile.TemporaryDirectory()
-    cfg = os.path.join(script_dir, "doc/example/nginx.conf")
+    cfg = os.path.join(script_dir, "doc/nginx.conf")
     os.mkdir(os.path.join(tmp.name, "logs"))
     p = subprocess.Popen(["nginx", "-p", tmp.name, "-c", cfg])
     try:
@@ -27,7 +27,7 @@ def nginx():
 @contextmanager
 def go_pkg_proxy():
     exe = os.path.join(script_dir, "target/go-pkg-proxy")
-    modules = os.path.join(script_dir, "doc/example/go.json")
+    modules = os.path.join(script_dir, "doc/go.json")
     p = subprocess.Popen([exe, "-log-level", "DEBUG", "-modules", modules])
     try:
         yield p

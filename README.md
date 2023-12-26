@@ -13,6 +13,17 @@ go-pkg-proxy
 ]
 ```
 
+```json
+location / {
+  if ($args ~ "go-get=1") {
+    proxy_pass http://127.0.0.1:8000;
+    break;
+  }
+
+  root webroot;
+
+```
+
 ## Usage
 ```
 Usage of go-pkg-proxy:

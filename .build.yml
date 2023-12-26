@@ -11,9 +11,10 @@ tasks:
       make run \
         GO_PKG_PROXY_LOG_LEVEL=DEBUG \
         GO_PKG_PROXY_DRY_RUN=1 \
-        GO_PKG_PROXY_MODULES=doc/example/go.json
+        GO_PKG_PROXY_MODULES=doc/go.json
   - test-nginx: |
       cd go-pkg-proxy
+      tools/is-clean --make --root=doc doc/nginx.conf
       ./test-nginx.py
   - check-doc: |
       cd go-pkg-proxy
