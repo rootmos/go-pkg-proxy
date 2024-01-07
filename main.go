@@ -37,14 +37,15 @@ func FetchModules(ctx context.Context, url string) (Modules, error) {
 
 	modules := make(Modules)
 	for _, m := range raw {
+		mod := m
 		if m.Name != "" {
 			logger.Debug("module", "name", m.Name, "definition", m)
-			modules[m.Name] = &m
+			modules[m.Name] = &mod
 		}
 
 		for _, n := range m.Names {
 			logger.Debug("module", "name", n, "definition", m)
-			modules[n] = &m
+			modules[n] = &mod
 		}
 	}
 
