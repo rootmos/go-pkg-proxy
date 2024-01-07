@@ -50,10 +50,14 @@ Usage of go-pkg-proxy:
     	bind to addr:port (default ":8000")
   -dry-run
     	try loading modules and exit afterwards
-  -log-json
-    	log JSON objects (instead of plain-text)
+  -json-log-file string
+    	log JSON to file (default "/dev/null")
+  -json-log-level string
+    	set JSON log level (default "INFO")
+  -log-file string
+    	log to file (default "/dev/stderr")
   -log-level string
-    	set logging level
+    	set log level (default "INFO")
   -modules string
     	fetch modules from URL (default "file://go.json")
 ```
