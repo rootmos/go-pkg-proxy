@@ -10,8 +10,8 @@ import (
 	"context"
 
 	"rootmos.io/go-pkg-proxy/internal/common"
-	"rootmos.io/go-pkg-proxy/internal/osext"
-	"rootmos.io/go-pkg-proxy/internal/logging"
+	"rootmos.io/go-utils/logging"
+	"rootmos.io/go-utils/osext"
 )
 
 type Module struct {
@@ -55,12 +55,16 @@ func main() {
 	addr := flag.String("addr", common.Getenv2("ADDR", ":8000"), "bind to addr:port")
 	modulesURL := flag.String("modules", common.Getenv2("MODULES", "file://go.json"), "fetch modules from URL")
 	dryRun := flag.Bool("dry-run", common.GetenvBool("DRY_RUN"), "try loading modules and exit afterwards")
+
+	logConfig := logging.PrepareConfig(common.EnvPrefix)
+
 	flag.Parse()
 
-	logger, err := logging.SetupDefaultLogger()
+	logger, closer, err := logConfig.SetupDefaultLogger()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer closer()
 	logger.Debug("hello")
 
 	if *dryRun {
