@@ -17,6 +17,14 @@ Modules and the corresponding reposity URLs are configured in a JSON file:
         "name": "go-pkg-proxy",
         "root": "rootmos.io/go-pkg-proxy",
         "repo": "https://git.sr.ht/~rootmos/go-pkg-proxy"
+    },
+    {
+        "names": [
+            "go-utils",
+            "go-utils/logging"
+        ],
+        "root": "rootmos.io/go-utils",
+        "repo": "https://git.sr.ht/~rootmos/go-utils"
     }
 ]
 ```

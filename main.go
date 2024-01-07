@@ -16,12 +16,13 @@ import (
 
 type Module struct {
 	Name string `json:"name"`
+	Names []string `json:"names"`
 	Root string `json:"root"`
 	VCS string `json:"vcs,omitempty"`
 	Repo string`json:"repo"`
 }
 
-type Modules map[string]Module
+type Modules map[string]*Module
 
 func FetchModules(ctx context.Context, url string) (Modules, error) {
 	logger := logging.Get(ctx)
@@ -29,16 +30,22 @@ func FetchModules(ctx context.Context, url string) (Modules, error) {
 	defer f.Close()
 
 	var raw []Module
-	dec := json.NewDecoder(f)
-	err = dec.Decode(&raw)
+	err = json.NewDecoder(f).Decode(&raw)
 	if err != nil {
 		return nil, err
 	}
 
 	modules := make(Modules)
 	for _, m := range raw {
-		logger.Debug("module", "name", m.Name, "definition", m)
-		modules[m.Name] = m
+		if m.Name != "" {
+			logger.Debug("module", "name", m.Name, "definition", m)
+			modules[m.Name] = &m
+		}
+
+		for _, n := range m.Names {
+			logger.Debug("module", "name", n, "definition", m)
+			modules[n] = &m
+		}
 	}
 
 	return modules, nil
