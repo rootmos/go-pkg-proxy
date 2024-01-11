@@ -3,8 +3,8 @@ module rootmos.io/go-pkg-proxy
 go 1.21.5
 
 require (
-	rootmos.io/go-utils/logging v0.1.0
-	rootmos.io/go-utils/osext v0.1.0
+	rootmos.io/go-utils/logging v0.2.1
+	rootmos.io/go-utils/osext v0.1.2
 )
 
 require (

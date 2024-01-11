@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"flag"
 	"fmt"
@@ -63,7 +62,7 @@ func main() {
 
 	logger, closer, err := logConfig.SetupDefaultLogger()
 	if err != nil {
-		log.Fatal(err)
+		logger.Exit(1, "unable to configure logger: %v", err)
 	}
 	defer closer()
 	logger.Debug("hello")
@@ -73,7 +72,7 @@ func main() {
 
 		_, err := FetchModules(ctx, *modulesURL)
 		if err != nil {
-			log.Fatal(err)
+			logger.Exit(1, "unable to fetch modules: %v", err)
 		}
 		return
 	}
@@ -118,5 +117,7 @@ func main() {
 	})
 
 	logger.Info("listening", "addr", *addr)
-	log.Fatal(http.ListenAndServe(*addr, nil))
+	if err := http.ListenAndServe(*addr, nil); err != nil {
+		logger.Exit(1, "serving failed: %v", err)
+	}
 }
